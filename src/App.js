@@ -1,23 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { useState } from 'react';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {light} from 'react-syntax-highlighter/dist/esm/styles/prism'
 function App() {
+  const[input,setInput] = useState();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <textarea 
+      autoFocus 
+      className="textarea" 
+      value={input} 
+      onChange={
+        (e) => setInput(e.target.value)
+      }/>
+      <ReactMarkdown children={input} remarkPlugins={[remarkGfm]} className="markdown"  components={{
+      code({node, inline, className, children, ...props}) {
+        const match = /language-(\w+)/.exec(className || '')
+        return !inline && match ? (
+          <SyntaxHighlighter
+            children={String(children).replace(/\n$/, '')}
+            language={match[1]}
+            PreTag="div"
+            {...props}
+          />
+        ) : (
+          <code className={className} {...props}>
+            {children}
+          </code>
+        )
+      }
+    }} />
     </div>
   );
 }
