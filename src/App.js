@@ -13,20 +13,20 @@ function App() {
   return (
         <div>
          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-  <Container>
-  <Navbar.Brand href="#home">Sean Markdown PDF generator</Navbar.Brand>
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-  <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav className="me-auto">
-    </Nav>
-    <Nav>
-      <Pdf targetRef={ref} filename="document.pdf">
-              {({ toPdf }) => <Button variant="outline-light" onClick={toPdf}>Generate Pdf</Button>}
-            </Pdf> 
-    </Nav>
-  </Navbar.Collapse>
-  </Container>
-</Navbar>
+            <Container>
+            <Navbar.Brand href="#home">Sean Markdown PDF generator</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="me-auto">
+              </Nav>
+              <Nav>
+                <Pdf targetRef={ref} filename="document.pdf">
+                        {({ toPdf }) => <Button variant="outline-light" onClick={toPdf}>Generate Pdf</Button>}
+                      </Pdf> 
+              </Nav>
+            </Navbar.Collapse>
+            </Container>
+          </Navbar>
           <div className="App">
           <textarea 
           autoFocus 
@@ -35,7 +35,7 @@ function App() {
           onChange={
             (e) => setInput(e.target.value)
           }/>
-          <div ref={ref}>
+          <section ref={ref}>
           <ReactMarkdown children={input} remarkPlugins={[remarkGfm]} className="markdown"  components={{
           code({node, inline, className, children, ...props}) {
             const match = /language-(\w+)/.exec(className || '')
@@ -53,7 +53,7 @@ function App() {
             )
           }
         }} />
-          </div>
+          </section>
 
           </div>
           </div>
